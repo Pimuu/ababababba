@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thinder — The Algorithm Knows</title>
+  <link rel="stylesheet" href="thinder.css">
+</head>
+<body>
+
+<div class="hearts-wrap" id="hearts"></div>
+
+<!-- ── HEADER ── -->
+<div class="site-header">
+  <div class="site-logo">Th<span class="heart">♡</span>nder</div>
+  <div class="site-tagline">The Algorithm Knows</div>
+  <div class="deco-line"></div>
+</div>
+
+<!-- ══════════════════════════════
+     SCREEN 1 — About You
+══════════════════════════════ -->
+<div class="screen active" id="screen-1">
+  <div class="steps">
+    <div class="step-dot done"></div>
+    <div class="step-dot"></div>
+    <div class="step-dot"></div>
+  </div>
+
+  <div class="paper">
+    <div class="washi"></div>
+    <div class="washi2"></div>
+    <span class="hole" style="top: 25%"></span>
+    <span class="hole" style="top: 50%"></span>
+    <span class="hole" style="top: 75%"></span>
+
+    <div class="paper-title">✦ About You</div>
+    <div class="paper-subtitle">Tell us who you are — the algorithm detects lies 😏</div>
+
+    <div class="field">
+      <label>Your Name</label>
+      <input type="text" id="user-name" placeholder="What should we call you?" />
+    </div>
+
+    <div class="field">
+      <label>Age</label>
+      <input type="number" id="user-age" placeholder="Your age" min="18" max="99" />
+    </div>
+
+    <div class="field">
+      <label>Describe yourself in a few words</label>
+      <textarea id="user-bio" placeholder="Be honest — write whatever feels true…"></textarea>
+    </div>
+
+    <div class="field">
+      <label>Your personality</label>
+      <div class="tag-group" id="personality-tags">
+        <div class="tag" onclick="toggleTag(this)">Adventurous</div>
+        <div class="tag" onclick="toggleTag(this)">Homebody</div>
+        <div class="tag" onclick="toggleTag(this)">Funny</div>
+        <div class="tag" onclick="toggleTag(this)">Caring</div>
+        <div class="tag" onclick="toggleTag(this)">Ambitious</div>
+        <div class="tag" onclick="toggleTag(this)">Creative</div>
+        <div class="tag" onclick="toggleTag(this)">Loyal</div>
+        <div class="tag" onclick="toggleTag(this)">Foodie</div>
+        <div class="tag" onclick="toggleTag(this)">Romantic</div>
+      </div>
+    </div>
+
+    <div class="btn-wrap">
+      <button class="btn" onclick="goTo2()">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     SCREEN 2 — What You Want
+══════════════════════════════ -->
+<div class="screen" id="screen-2">
+  <div class="steps">
+    <div class="step-dot done"></div>
+    <div class="step-dot done"></div>
+    <div class="step-dot"></div>
+  </div>
+
+  <div class="paper">
+    <div class="washi" style="right:auto;left:30px;transform:rotate(2deg)"></div>
+    <span class="hole" style="top: 25%"></span>
+    <span class="hole" style="top: 50%"></span>
+    <span class="hole" style="top: 75%"></span>
+
+    <div class="paper-title">✦ Your Dream Person</div>
+    <div class="paper-subtitle">Describe who you're looking for — be as specific as you want</div>
+
+    <div class="field">
+      <label>What are you looking for?</label>
+      <textarea id="want-bio" placeholder="e.g. Someone who makes me laugh, is kind to strangers, loves to travel…"></textarea>
+    </div>
+
+    <div class="field">
+      <label>Most important quality</label>
+      <div class="tag-group" id="quality-tags">
+        <div class="tag" onclick="solo(this, 'quality-tags')">Sense of humor</div>
+        <div class="tag" onclick="solo(this, 'quality-tags')">Loyalty</div>
+        <div class="tag" onclick="solo(this, 'quality-tags')">Kindness</div>
+        <div class="tag" onclick="solo(this, 'quality-tags')">Ambition</div>
+        <div class="tag" onclick="solo(this, 'quality-tags')">Intelligence</div>
+        <div class="tag" onclick="solo(this, 'quality-tags')">Spontaneity</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Dream first date</label>
+      <div class="tag-group" id="date-tags">
+        <div class="tag" onclick="solo(this, 'date-tags')">Romantic dinner</div>
+        <div class="tag" onclick="solo(this, 'date-tags')">Outdoor adventure</div>
+        <div class="tag" onclick="solo(this, 'date-tags')">Cozy café</div>
+        <div class="tag" onclick="solo(this, 'date-tags')">Movie night in</div>
+        <div class="tag" onclick="solo(this, 'date-tags')">Spontaneous road trip</div>
+      </div>
+    </div>
+
+    <div class="btn-wrap">
+      <button class="btn" onclick="startShuffle()">🔍 Find My Match</button>
+      <button class="btn ghost" onclick="showScreen('screen-1')">← Back</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     SCREEN 3 — Shuffle
+══════════════════════════════ -->
+<div class="screen" id="screen-shuffle">
+  <div class="shuffle-label">Finding your match…</div>
+  <div class="shuffle-sub">Scanning 5,102,847 profiles</div>
+
+  <div class="shuffle-stage" id="shuffle-stage"></div>
+
+  <div class="shuffle-status-wrap">
+    <div class="shuffle-status" id="shuffle-status">Initializing the engine…</div>
+    <div class="dots" style="margin-top:0.4rem">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     SCREEN 4 — Match Reveal
+══════════════════════════════ -->
+<div class="screen" id="screen-match">
+  <div class="match-ribbon">🌹 It's a Match!</div>
+
+  <div class="reveal-paper">
+    <div class="reveal-photo">
+      <img src="childhood_pic.jpg" alt="Peem" style="width:100%;height:100%;object-fit:cover;object-position:center top;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:5rem;background:linear-gradient(135deg,#fde8ee,#f4c6d4)">😊</div>
+    </div>
+    <div class="reveal-body">
+      <div class="reveal-name">Peem ✦</div>
+      <div class="reveal-age">19 years old · Your perfect match</div>
+      <div class="reveal-bio">
+        The kind of person who will <em>love</em> you without even trying.
+        Smart, Playful, Romantic and Caring person to the girl he loves.
+        He will add color to your daily life and change your life better than ever.
+      </div>
+      <div class="compat-row">
+        <span>Compatibility</span>
+        <span>10000%</span>
+      </div>
+      <div class="compat-track">
+        <div class="compat-fill" id="compat-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="algo-note">
+    <div class="algo-note-title">📋 Algorithm Report</div>
+    <p id="algo-reason">Loading…</p>
+  </div>
+
+  <button class="btn" style="animation:rise-in 0.6s 0.5s both" onclick="acceptMatch()">
+    💌 Accept Match
+  </button>
+</div>
+
+<!-- ══════════════════════════════
+     SCREEN 5 — Countdown & Date
+══════════════════════════════ -->
+<div class="screen" id="screen-date">
+  <div class="match-ribbon">🗓️ Your date is waiting!</div>
+
+  <div class="reveal-paper" style="max-width:380px">
+    <div class="reveal-photo" style="height:140px;background:linear-gradient(135deg,#fde8ee,#f4c6d4,#faeae3);flex-direction:column;gap:0.4rem">
+      <span style="font-size:3rem">✈️</span>
+      <span style="font-family:'Caveat',cursive;font-size:1.1rem;color:var(--rose)">Peem is back in Thailand!</span>
+    </div>
+    <div class="reveal-body">
+      <div class="reveal-name" style="font-size:1.5rem">August 10, 2026</div>
+      <div class="reveal-age" style="margin-bottom:1rem">The day we finally meet ❤️</div>
+
+      <!-- Countdown -->
+      <div style="display:flex;gap:0.8rem;justify-content:center;margin-bottom:1.2rem;flex-wrap:wrap">
+        <div class="countdown-box"><span id="cd-days">--</span><small>days</small></div>
+        <div class="countdown-box"><span id="cd-hours">--</span><small>hours</small></div>
+        <div class="countdown-box"><span id="cd-mins">--</span><small>mins</small></div>
+        <div class="countdown-box"><span id="cd-secs">--</span><small>secs</small></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="algo-note" style="max-width:380px">
+    <div class="algo-note-title">💌 A message from Peem</div>
+    <p style="font-style:italic;color:var(--ink2);line-height:1.7">
+      "I miss you so much babe please go on a date with me na krub 🌹"
+    </p>
+  </div>
+</div>
+
+<script src="thinder.js"></script>
+</body>
+</html>
